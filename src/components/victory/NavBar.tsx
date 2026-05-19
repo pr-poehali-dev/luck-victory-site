@@ -38,12 +38,15 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
             ))}
           </div>
           <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={() => setLang(lang)}
-              className="font-oswald text-xs tracking-widest uppercase border border-white/20 text-white/60 hover:border-neon-yellow/50 hover:text-neon-yellow transition-all px-3 py-1.5 rounded"
-            >
-              {lang === "ru" ? "KZ" : lang === "kz" ? "AZ" : "RU"}
-            </button>
+            {(["ru", "kz", "az"] as const).map(l => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`font-oswald text-xs tracking-widest uppercase border transition-all px-3 py-1.5 rounded ${lang === l ? "border-neon-yellow text-neon-yellow" : "border-white/20 text-white/60 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
             <button className="btn-victory px-5 py-2 text-sm rounded" onClick={() => scrollTo("stories")}>
               {tr.shareVictory}
             </button>
@@ -59,12 +62,17 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
                 {item.label}
               </button>
             ))}
-            <button
-              onClick={() => setLang(lang)}
-              className="font-oswald text-sm tracking-wider uppercase text-left text-neon-yellow"
-            >
-              {lang === "ru" ? "Қазақша" : lang === "kz" ? "Azərbaycan" : "Русский"}
-            </button>
+            <div className="flex gap-3">
+              {(["ru", "kz", "az"] as const).map(l => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`font-oswald text-sm tracking-wider uppercase ${lang === l ? "text-neon-yellow" : "text-white/50"}`}
+                >
+                  {l.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </nav>
