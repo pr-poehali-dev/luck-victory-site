@@ -1,14 +1,13 @@
 import Icon from "@/components/ui/icon";
 import { HERO_IMG } from "./data";
 import { useLang } from "./LangContext";
-import { Lang } from "./i18n";
 
 interface HeroSectionProps {
   scrollTo: (id: string) => void;
 }
 
 export default function HeroSection({ scrollTo }: HeroSectionProps) {
-  const { tr, lang, setLang } = useLang();
+  const { tr } = useLang();
   const h = tr.hero;
 
   return (
@@ -21,17 +20,6 @@ export default function HeroSection({ scrollTo }: HeroSectionProps) {
 
       <div className="relative max-w-6xl mx-auto px-4 py-20">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-3 mb-6" style={{ opacity: 0, animation: "fade-up 0.6s ease-out 0s forwards" }}>
-            {(["ru", "kz", "az"] as const).map((l: Lang) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`font-oswald text-sm tracking-widest uppercase border transition-all px-4 py-1.5 rounded ${lang === l ? "border-neon-yellow text-neon-yellow bg-neon-yellow/10" : "border-white/20 text-white/50 hover:border-white/40 hover:text-white/80"}`}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
           <div style={{ opacity: 0, animation: "fade-up 0.6s ease-out 0.1s forwards" }}>
             <span className="inline-block font-oswald text-xs tracking-[0.3em] uppercase text-neon-orange mb-4 border border-neon-orange/30 px-3 py-1">
               {h.badge}

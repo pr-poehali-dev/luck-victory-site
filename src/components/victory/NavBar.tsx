@@ -1,5 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { useLang } from "./LangContext";
+import { Lang } from "./i18n";
 
 interface NavBarProps {
   activeSection: string;
@@ -9,7 +10,7 @@ interface NavBarProps {
 }
 
 export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpen, scrollTo }: NavBarProps) {
-  const { tr } = useLang();
+  const { tr, lang, setLang } = useLang();
 
   const navItems = [
     { id: "hero",    label: tr.nav.hero },
@@ -38,6 +39,15 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
             ))}
           </div>
           <div className="hidden md:flex items-center gap-3">
+            {(["ru", "kz", "az"] as const).map((l: Lang) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`font-oswald text-xs tracking-widest uppercase border transition-all px-3 py-1.5 rounded ${lang === l ? "border-neon-yellow text-neon-yellow bg-neon-yellow/10" : "border-white/20 text-white/60 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
             <button className="btn-victory px-5 py-2 text-sm rounded" onClick={() => scrollTo("stories")}>
               {tr.shareVictory}
             </button>
@@ -53,7 +63,17 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
                 {item.label}
               </button>
             ))}
-
+            <div className="flex gap-3 pt-1">
+              {(["ru", "kz", "az"] as const).map((l: Lang) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`font-oswald text-sm tracking-widest uppercase ${lang === l ? "text-neon-yellow" : "text-white/40"}`}
+                >
+                  {l.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </nav>
