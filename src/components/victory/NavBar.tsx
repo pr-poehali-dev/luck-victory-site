@@ -24,9 +24,22 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0d0d0d]/90 backdrop-blur-sm border-b border-[#FFE500]/10">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <button onClick={() => scrollTo("hero")} className="font-oswald font-bold text-xl tracking-widest text-neon-yellow text-glow-yellow">
-            {tr.brand}
-          </button>
+          <div className="flex items-center gap-4">
+            <button onClick={() => scrollTo("hero")} className="font-oswald font-bold text-xl tracking-widest text-neon-yellow text-glow-yellow">
+              {tr.brand}
+            </button>
+            <div className="hidden md:flex items-center gap-1">
+              {(["ru", "kz", "az"] as const).map((l: Lang) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`font-oswald text-xs tracking-widest uppercase border transition-all px-2.5 py-1 rounded ${lang === l ? "border-neon-yellow text-neon-yellow bg-neon-yellow/10" : "border-white/20 text-white/50 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
+                >
+                  {l.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="hidden md:flex items-center gap-8">
             {navItems.map(item => (
               <button
@@ -39,15 +52,6 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
             ))}
           </div>
           <div className="hidden md:flex items-center gap-3">
-            {(["ru", "kz", "az"] as const).map((l: Lang) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`font-oswald text-xs tracking-widest uppercase border transition-all px-3 py-1.5 rounded ${lang === l ? "border-neon-yellow text-neon-yellow bg-neon-yellow/10" : "border-white/20 text-white/60 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
             <button className="btn-victory px-5 py-2 text-sm rounded" onClick={() => scrollTo("stories")}>
               {tr.shareVictory}
             </button>
