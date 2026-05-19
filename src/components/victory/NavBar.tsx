@@ -39,10 +39,10 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
           </div>
           <div className="hidden md:flex items-center gap-3">
             <button
-              onClick={() => setLang(lang === "ru" ? "kz" : "ru")}
+              onClick={() => setLang(lang)}
               className="font-oswald text-xs tracking-widest uppercase border border-white/20 text-white/60 hover:border-neon-yellow/50 hover:text-neon-yellow transition-all px-3 py-1.5 rounded"
             >
-              {lang === "ru" ? "KZ" : "RU"}
+              {lang === "ru" ? "KZ" : lang === "kz" ? "AZ" : "RU"}
             </button>
             <button className="btn-victory px-5 py-2 text-sm rounded" onClick={() => scrollTo("stories")}>
               {tr.shareVictory}
@@ -60,10 +60,10 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
               </button>
             ))}
             <button
-              onClick={() => setLang(lang === "ru" ? "kz" : "ru")}
+              onClick={() => setLang(lang)}
               className="font-oswald text-sm tracking-wider uppercase text-left text-neon-yellow"
             >
-              {lang === "ru" ? "Қазақша" : "Русский"}
+              {lang === "ru" ? "Қазақша" : lang === "kz" ? "Azərbaycan" : "Русский"}
             </button>
           </div>
         )}
