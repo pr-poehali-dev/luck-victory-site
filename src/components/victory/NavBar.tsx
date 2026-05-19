@@ -9,7 +9,7 @@ interface NavBarProps {
 }
 
 export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpen, scrollTo }: NavBarProps) {
-  const { lang, setLang, tr } = useLang();
+  const { tr } = useLang();
 
   const navItems = [
     { id: "hero",    label: tr.nav.hero },
@@ -38,15 +38,6 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
             ))}
           </div>
           <div className="hidden md:flex items-center gap-3">
-            {(["ru", "kz", "az"] as const).map(l => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`font-oswald text-xs tracking-widest uppercase border transition-all px-3 py-1.5 rounded ${lang === l ? "border-neon-yellow text-neon-yellow" : "border-white/20 text-white/60 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
             <button className="btn-victory px-5 py-2 text-sm rounded" onClick={() => scrollTo("stories")}>
               {tr.shareVictory}
             </button>
@@ -62,17 +53,7 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
                 {item.label}
               </button>
             ))}
-            <div className="flex gap-3">
-              {(["ru", "kz", "az"] as const).map(l => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  className={`font-oswald text-sm tracking-wider uppercase ${lang === l ? "text-neon-yellow" : "text-white/50"}`}
-                >
-                  {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
+
           </div>
         )}
       </nav>
