@@ -1,12 +1,25 @@
 import Icon from "@/components/ui/icon";
 import AnimatedSection from "./AnimatedSection";
-import { GALLERY_IMG, LUCKY_IMG, galleryItems, tips, stats, navItems } from "./data";
+import { GALLERY_IMG, LUCKY_IMG } from "./data";
+import { useLang } from "./LangContext";
 
 interface GalleryTipsStatsFooterProps {
   scrollTo: (id: string) => void;
 }
 
 export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFooterProps) {
+  const { tr } = useLang();
+  const g = tr.gallery;
+  const st = tr.stats;
+
+  const navItems = [
+    { id: "hero",    label: tr.nav.hero },
+    { id: "stories", label: tr.nav.stories },
+    { id: "gallery", label: tr.nav.gallery },
+    { id: "tips",    label: tr.nav.tips },
+    { id: "stats",   label: tr.nav.stats },
+  ];
+
   return (
     <>
       {/* GALLERY */}
@@ -15,9 +28,9 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
 
         <div className="max-w-6xl mx-auto px-4">
           <AnimatedSection className="mb-16">
-            <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-pink">Галерея</span>
+            <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-pink">{g.badge}</span>
             <h2 className="font-oswald font-bold text-5xl md:text-6xl text-white mt-2">
-              ФОТО И ВИДЕО <span className="text-neon-pink">ПОБЕД</span>
+              {g.title1} <span className="text-neon-pink">{g.title2}</span>
             </h2>
             <div className="section-divider w-24 mt-4" />
           </AnimatedSection>
@@ -28,8 +41,8 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
                 <img src={GALLERY_IMG} alt="Галерея побед" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent" />
                 <div className="absolute bottom-4 left-4">
-                  <span className="text-neon-pink font-oswald text-xs uppercase tracking-wider">Подборка недели</span>
-                  <h3 className="font-oswald text-2xl text-white font-semibold mt-1">Лучшие победы мая 2026</h3>
+                  <span className="text-neon-pink font-oswald text-xs uppercase tracking-wider">{g.weekBadge}</span>
+                  <h3 className="font-oswald text-2xl text-white font-semibold mt-1">{g.weekTitle}</h3>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="w-16 h-16 rounded-full bg-neon-yellow/90 flex items-center justify-center">
@@ -44,15 +57,15 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
                 <img src={LUCKY_IMG} alt="Символы удачи" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent" />
                 <div className="absolute bottom-4 left-4">
-                  <span className="text-neon-cyan font-oswald text-xs uppercase tracking-wider">Символы удачи</span>
-                  <h3 className="font-oswald text-lg text-white font-semibold mt-1">Обереги победителей</h3>
+                  <span className="text-neon-cyan font-oswald text-xs uppercase tracking-wider">{g.luckyBadge}</span>
+                  <h3 className="font-oswald text-lg text-white font-semibold mt-1">{g.luckyTitle}</h3>
                 </div>
               </div>
             </AnimatedSection>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {galleryItems.map((item, i) => (
+            {tr.galleryData.map((item, i) => (
               <AnimatedSection key={i}>
                 <div className="card-victory rounded-lg p-4 text-center cursor-pointer group">
                   <div className="text-4xl mb-3 group-hover:animate-float">{item.emoji}</div>
@@ -65,7 +78,7 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
 
           <AnimatedSection className="text-center mt-10">
             <button className="btn-victory px-10 py-4 text-sm rounded">
-              Добавить свою победу
+              {g.addBtn}
             </button>
           </AnimatedSection>
         </div>
@@ -74,15 +87,15 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
       {/* TIPS */}
       <section id="tips" className="py-24 max-w-6xl mx-auto px-4">
         <AnimatedSection className="mb-16">
-          <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-yellow">Практические советы</span>
+          <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-yellow">{tr.tips.badge}</span>
           <h2 className="font-oswald font-bold text-5xl md:text-6xl text-white mt-2">
-            ПРИВЛЕКИ <span className="text-neon-yellow">УДАЧУ</span>
+            {tr.tips.title1} <span className="text-neon-yellow">{tr.tips.title2}</span>
           </h2>
           <div className="section-divider w-24 mt-4" />
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tips.map((tip, i) => (
+          {tr.tipsData.map((tip, i) => (
             <AnimatedSection key={i}>
               <div className="card-victory rounded-lg p-6 group">
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-5" style={{ backgroundColor: tip.color + "15", border: `1px solid ${tip.color}30` }}>
@@ -103,15 +116,15 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
 
         <div className="max-w-6xl mx-auto px-4">
           <AnimatedSection className="mb-16">
-            <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-cyan">Данные и факты</span>
+            <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-cyan">{st.badge}</span>
             <h2 className="font-oswald font-bold text-5xl md:text-6xl text-white mt-2">
-              СТАТИСТИКА <span className="text-neon-cyan">ВЕЗЕНИЯ</span>
+              {st.title1} <span className="text-neon-cyan">{st.title2}</span>
             </h2>
             <div className="section-divider w-24 mt-4" />
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {stats.map((stat, i) => (
+            {tr.statsData.map((stat, i) => (
               <AnimatedSection key={i}>
                 <div className="card-victory rounded-lg p-7 group">
                   <div className="flex items-start gap-4">
@@ -134,17 +147,17 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
             <div className="relative rounded-2xl overflow-hidden p-8 md:p-12" style={{ background: "linear-gradient(135deg, rgba(255, 229, 0, 0.1) 0%, rgba(255, 107, 0, 0.1) 50%, rgba(255, 45, 120, 0.1) 100%)", border: "1px solid rgba(255, 229, 0, 0.2)" }}>
               <div className="max-w-2xl">
                 <h3 className="font-oswald font-bold text-4xl md:text-5xl text-white mb-4">
-                  ТВОЯ ПОБЕДА <span className="text-neon-yellow">ЖДЁТ</span>
+                  {st.ctaTitle1} <span className="text-neon-yellow">{st.ctaTitle2}</span>
                 </h3>
                 <p className="text-white/60 text-base leading-relaxed mb-8">
-                  Присоединяйся к сообществу победителей. Делись своей историей, вдохновляй других и получай поддержку в пути к мечте.
+                  {st.ctaDesc}
                 </p>
                 <div className="flex gap-4 flex-wrap">
                   <button className="btn-victory px-8 py-4 text-sm rounded" onClick={() => scrollTo("stories")}>
-                    Поделиться историей
+                    {st.ctaBtn1}
                   </button>
                   <button className="border border-white/20 text-white font-oswald uppercase tracking-wider px-8 py-4 text-sm rounded hover:border-white/40 transition-all" onClick={() => scrollTo("tips")}>
-                    Читать советы
+                    {st.ctaBtn2}
                   </button>
                 </div>
               </div>
@@ -158,8 +171,8 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <div className="font-oswald font-bold text-2xl tracking-widest text-neon-yellow text-glow-yellow mb-2">ПОБЕДЫ</div>
-              <p className="text-white/30 text-sm">Платформа реальных историй успеха</p>
+              <div className="font-oswald font-bold text-2xl tracking-widest text-neon-yellow text-glow-yellow mb-2">{tr.brand}</div>
+              <p className="text-white/30 text-sm">{tr.footer.sub}</p>
             </div>
             <div className="flex gap-6 flex-wrap justify-center">
               {navItems.map(item => (
@@ -171,7 +184,7 @@ export default function GalleryTipsStatsFooter({ scrollTo }: GalleryTipsStatsFoo
           </div>
           <div className="section-divider w-full mt-8 mb-6" />
           <div className="text-center text-white/20 text-xs">
-            © 2026 ПОБЕДЫ — Вдохновляем на великие дела
+            {tr.footer.copy}
           </div>
         </div>
       </footer>

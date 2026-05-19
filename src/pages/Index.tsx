@@ -1,23 +1,33 @@
 import { useState, useEffect } from "react";
-import { navItems, stories } from "@/components/victory/data";
+import { LangProvider, useLang } from "@/components/victory/LangContext";
 import NavBar from "@/components/victory/NavBar";
 import HeroSection from "@/components/victory/HeroSection";
 import StoriesSection from "@/components/victory/StoriesSection";
 import GalleryTipsStatsFooter from "@/components/victory/GalleryTipsStatsFooter";
 
-export default function Index() {
+const navSectionIds = ["hero", "stories", "gallery", "tips", "stats"];
+
+function IndexContent() {
+  const { tr } = useLang();
+
   const [activeSection, setActiveSection] = useState("hero");
   const [openStory, setOpenStory] = useState<number | null>(null);
   const [commentTexts, setCommentTexts] = useState<Record<number, string>>({});
-  const [storyComments, setStoryComments] = useState(stories);
+  const [storyComments, setStoryComments] = useState(tr.storiesData);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    setStoryComments(tr.storiesData);
+    setOpenStory(null);
+    setCommentTexts({});
+  }, [tr]);
+
+  useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(n => ({ id: n.id, el: document.getElementById(n.id) }));
-      for (const s of [...sections].reverse()) {
-        if (s.el && window.scrollY >= s.el.offsetTop - 120) {
-          setActiveSection(s.id);
+      for (const id of [...navSectionIds].reverse()) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 120) {
+          setActiveSection(id);
           break;
         }
       }
@@ -37,7 +47,7 @@ export default function Index() {
     setStoryComments(prev =>
       prev.map(s => s.id === storyId ? {
         ...s,
-        comments: [...s.comments, { id: Date.now(), author: "Вы", text, time: "только что" }]
+        comments: [...s.comments, { id: Date.now(), author: tr.stories.you, text, time: tr.stories.justNow }]
       } : s)
     );
     setCommentTexts(prev => ({ ...prev, [storyId]: "" }));
@@ -62,5 +72,13 @@ export default function Index() {
       />
       <GalleryTipsStatsFooter scrollTo={scrollTo} />
     </div>
+  );
+}
+
+export default function Index() {
+  return (
+    <LangProvider>
+      <IndexContent />
+    </LangProvider>
   );
 }

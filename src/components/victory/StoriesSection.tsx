@@ -1,5 +1,6 @@
 import Icon from "@/components/ui/icon";
 import AnimatedSection from "./AnimatedSection";
+import { useLang } from "./LangContext";
 
 interface Comment {
   id: number;
@@ -36,13 +37,16 @@ export default function StoriesSection({
   setCommentTexts,
   addComment,
 }: StoriesSectionProps) {
+  const { tr } = useLang();
+  const s = tr.stories;
+
   return (
     <section id="stories" className="py-24 max-w-6xl mx-auto px-4">
       <AnimatedSection>
         <div className="mb-16">
-          <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-orange">Реальные люди</span>
+          <span className="font-oswald text-xs tracking-[0.3em] uppercase text-neon-orange">{s.badge}</span>
           <h2 className="font-oswald font-bold text-5xl md:text-6xl text-white mt-2">
-            ИСТОРИИ <span className="text-neon-yellow">УСПЕХА</span>
+            {s.title1} <span className="text-neon-yellow">{s.title2}</span>
           </h2>
           <div className="section-divider w-24 mt-4" />
         </div>
@@ -71,11 +75,11 @@ export default function StoriesSection({
               <div className="flex items-center gap-4 mt-4 pt-4 border-t border-white/5">
                 <button className="flex items-center gap-1.5 text-white/40 hover:text-neon-yellow transition-colors text-xs" onClick={e => e.stopPropagation()}>
                   <Icon name="Heart" size={14} />
-                  <span>Вдохновляет</span>
+                  <span>{s.inspire}</span>
                 </button>
                 <button className="flex items-center gap-1.5 text-white/40 hover:text-neon-cyan transition-colors text-xs" onClick={e => { e.stopPropagation(); setOpenStory(openStory === story.id ? null : story.id); }}>
                   <Icon name="MessageCircle" size={14} />
-                  <span>{story.comments.length} комментариев</span>
+                  <span>{s.commentCount(story.comments.length)}</span>
                 </button>
                 <button className="flex items-center gap-1.5 text-white/40 hover:text-neon-orange transition-colors text-xs ml-auto" onClick={e => e.stopPropagation()}>
                   <Icon name="Share2" size={14} />
@@ -84,10 +88,10 @@ export default function StoriesSection({
 
               {openStory === story.id && (
                 <div className="mt-5 pt-5 border-t border-white/10" onClick={e => e.stopPropagation()}>
-                  <h4 className="font-oswald text-sm uppercase tracking-wider text-white/50 mb-4">Комментарии</h4>
+                  <h4 className="font-oswald text-sm uppercase tracking-wider text-white/50 mb-4">{s.comments}</h4>
                   <div className="space-y-3 mb-4">
                     {story.comments.length === 0 && (
-                      <p className="text-white/30 text-sm">Будьте первым, кто поддержит эту историю!</p>
+                      <p className="text-white/30 text-sm">{s.noComments}</p>
                     )}
                     {story.comments.map(c => (
                       <div key={c.id} className="bg-white/5 rounded p-3">
@@ -102,7 +106,7 @@ export default function StoriesSection({
                   <div className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="Напишите слова поддержки..."
+                      placeholder={s.placeholder}
                       value={commentTexts[story.id] || ""}
                       onChange={e => setCommentTexts(prev => ({ ...prev, [story.id]: e.target.value }))}
                       onKeyDown={e => e.key === "Enter" && addComment(story.id)}
@@ -112,7 +116,7 @@ export default function StoriesSection({
                       onClick={() => addComment(story.id)}
                       className="btn-victory px-4 py-2 text-xs rounded"
                     >
-                      Отправить
+                      {s.send}
                     </button>
                   </div>
                 </div>
@@ -124,7 +128,7 @@ export default function StoriesSection({
 
       <AnimatedSection className="text-center mt-12">
         <button className="border border-neon-yellow/30 text-neon-yellow font-oswald uppercase tracking-wider px-10 py-4 rounded hover:bg-neon-yellow/10 transition-all">
-          Загрузить ещё истории
+          {s.loadMore}
         </button>
       </AnimatedSection>
     </section>
