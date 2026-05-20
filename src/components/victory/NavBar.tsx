@@ -28,12 +28,12 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
             <button onClick={() => scrollTo("hero")} className="font-oswald font-bold text-xl tracking-widest text-neon-yellow text-glow-yellow">
               {tr.brand}
             </button>
-            <div className="hidden md:flex items-center gap-1">
-              {(["ru", "kz", "az"] as const).map((l: Lang) => (
+            <div className="flex items-center gap-1">
+              {(["ru", "kz", "az", "pl"] as const).map((l: Lang) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className={`font-oswald text-xs tracking-widest uppercase border transition-all px-2.5 py-1 rounded ${lang === l ? "border-neon-yellow text-neon-yellow bg-neon-yellow/10" : "border-white/20 text-white/50 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
+                  className={`font-oswald text-[10px] md:text-xs tracking-widest uppercase border transition-all px-2 py-1 rounded ${lang === l ? "border-neon-yellow text-neon-yellow bg-neon-yellow/10" : "border-white/20 text-white/50 hover:border-neon-yellow/50 hover:text-neon-yellow"}`}
                 >
                   {l.toUpperCase()}
                 </button>
@@ -68,7 +68,7 @@ export default function NavBar({ activeSection, mobileMenuOpen, setMobileMenuOpe
               </button>
             ))}
             <div className="flex gap-3 pt-1">
-              {(["ru", "kz", "az"] as const).map((l: Lang) => (
+              {(["ru", "kz", "az", "pl"] as const).map((l: Lang) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}
